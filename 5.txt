@@ -1,0 +1,71 @@
+
+5th
+
+
+
+
+import numpy
+
+genes = 2
+chromosomes = 10
+mattingPoolSize = 6
+offspringSize = chromosomes - mattingPoolSize
+lb = -5
+ub = 5
+populationSize = (chromosomes, genes)
+generations = 3
+
+population = numpy.random.uniform(lb, ub, populationSize)
+
+for generation in range(generations):
+    print(("Generation:", generation+1))
+    fitness = numpy.sum(population*population, axis=1)
+    print("\npopulation")
+    print(population)
+    print("\nfitness calculation")
+    print(fitness)
+    
+    parents = numpy.empty((mattingPoolSize, population.shape[1]))
+    
+    for p in range(mattingPoolSize):
+        fittestIndex = numpy.where(fitness == numpy.max(fitness))
+        fittestIndex = fittestIndex[0][0]
+        parents[p, :] = population[fittestIndex, :]
+        fitness[fittestIndex] = -1
+    print("\nparents:")
+    print(parents)
+    
+    offspring = numpy.empty((offspringSize, population.shape[1]))
+    
+    for k in range(offspringSize):
+        crossoverpoint = numpy.random.randint(0, genes)
+        parent1Index = k%parents.shape[0]
+        parent2Index = (k+1)%parents.shape[0]
+        offspring[k, 0: crossoverpoint] = parents[parent1Index, 0: crossoverpoint]
+        offspring[k, crossoverpoint:] = parents[parent2Index, crossoverpoint:]
+    print("\nOffspring after crossover")
+    print(offspring)
+    
+    for index in range(offspring.shape[0]):
+        
+        randomIndex = numpy.random.randint(1,genes)
+        randomvalue = numpy.random.uniform(lb,ub,1)
+        offspring[index,randomIndex]=offspring[index,randomIndex]+randomvalue
+    print("\nOffspring after mutation")
+    print(offspring)
+    
+    population[0:parents.shape[0], :] = parents
+    population[parents.shape[0]:, :] = offspring
+    print("\nNew population for next generation:")
+    print(population)
+    
+fitness = numpy.sum(population*population, axis=1)
+fittestIndex = numpy.where(fitness == numpy.max(fitness))
+
+fittestIndex = fittestIndex[0][0]
+fittestInd = population[fittestIndex, :]
+bestFitness = fitness[fittestIndex]
+print("\nbest individual:")
+print(fittestInd)
+print("\nBest Individual's Fitness:")
+print(bestFitness)
