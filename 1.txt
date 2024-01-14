@@ -2,7 +2,7 @@ import csv
 import random
 import math
 import operator
-Define loadDataset
+#Define loadDataset
 def loadDataset(filename,split,trainingSet=[],testSet=[]):
     with open(filename) as csvfile:
         lines = csv.reader(csvfile)
