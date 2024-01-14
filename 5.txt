@@ -1,9 +1,3 @@
-
-5th
-
-
-
-
 import numpy
 
 genes = 2
