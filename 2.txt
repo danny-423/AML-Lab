@@ -1,0 +1,30 @@
+#Importing Libraries
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+from sklearn.mixture import GaussianMixture
+from sklearn.cluster import KMeans
+#Importing Datasets
+data=pd.read_csv('knnvsempgm2.csv')
+print("input data and shape")
+print(data.shape)
+data.head()
+#Dividing the dataset
+f1 = data['v1'].values
+f2 = data['v2'].values
+X = np.array(list(zip(f1,f2)))
+#Printing the datatset
+print("X", X)
+print('graph for whole dataset')
+plt.scatter (f1, f2, c = 'black', s = 15)
+plt.show()
+#Clustering the dataset using K-means clustering
+kmeans=KMeans(10, random_state=42)
+labels = kmeans.fit(X).predict(X)
+print("labels",labels)
+centroids = kmeans.cluster_centers_
+print("centroids",centroids)
+plt.scatter(X[:,0], X[:,1], c=labels, s=40, cmap='viridis');
+print('graph using Kmeans Algorithm')
+plt.scatter(centroids[:,0], centroids[:,1],marker='*',s=200, c='#050505')
+plt.show()
