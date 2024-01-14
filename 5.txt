@@ -40,8 +40,7 @@ for generation in range(generations):
     print("\nOffspring after crossover")
     print(offspring)
     
-    for index in range(offspring.shape[0]):
-        
+    for index in range(offspring.shape[0]):        
         randomIndex = numpy.random.randint(1,genes)
         randomvalue = numpy.random.uniform(lb,ub,1)
         offspring[index,randomIndex]=offspring[index,randomIndex]+randomvalue
