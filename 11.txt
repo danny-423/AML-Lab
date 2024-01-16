@@ -1,0 +1,34 @@
+# Import necessary libraries
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score, classification_report
+
+# Load the Iris dataset
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
+class_names = iris.target_names  # Added for mapping numeric labels to class names
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Initialize the kNN classifier
+knn = KNeighborsClassifier(n_neighbors=3)
+
+# Train the classifier on the training set
+knn.fit(X_train, y_train)
+
+# Make predictions on the testing set
+y_pred = knn.predict(X_test)
+
+# Print actual and predicted instances as words
+print("Actual vs Predicted:")
+for actual, predicted in zip(y_test, y_pred):
+    actual_class = class_names[actual]
+    predicted_class = class_names[predicted]
+    print(f"Actual: {actual_class}, Predicted: {predicted_class}")
+
+# Evaluate the model
+accuracy = accuracy_score(y_test, y_pred)
+print(f"\nAccuracy: {accuracy * 100:.2f}%")
